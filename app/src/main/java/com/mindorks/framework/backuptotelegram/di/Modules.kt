@@ -2,6 +2,7 @@ package com.mindorks.framework.backuptotelegram.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.mindorks.framework.backuptotelegram.data.network.auth.AuthValidator
 import com.mindorks.framework.backuptotelegram.data.network.auth.AuthValidatorImpl
 import com.mindorks.framework.backuptotelegram.data.network.telegram.TelegramNetworkInterceptor
@@ -66,6 +67,16 @@ class NetworkProviderModule {
     @Singleton
     fun provideDeleteService(retrofit: Retrofit): DeleteService =
         retrofit.create(DeleteService::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class WorkManagerProviderModule {
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager =
+        WorkManager.getInstance(context)
 }
 
 @Module
