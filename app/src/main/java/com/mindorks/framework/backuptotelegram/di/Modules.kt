@@ -35,13 +35,11 @@ import javax.inject.Singleton
 class NetworkProviderModule {
 
     @Provides
-    @Singleton
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder().addInterceptor(TelegramNetworkInterceptor()).build()
 
 
     @Provides
-    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .client(okHttpClient)
         .baseUrl("https://api.telegram.org/")
@@ -84,11 +82,9 @@ class WorkManagerProviderModule {
 class StorageProviderModule {
 
     @Provides
-    @Singleton
     fun provideMediaFileDao(appDataBase: AppDataBase): MediaFileDao = appDataBase.getMediaFileDao()
 
     @Provides
-    @Singleton
     fun provideAppDataBase(@ApplicationContext context: Context): AppDataBase =
         Room.databaseBuilder(context, AppDataBase::class.java, "ReservedMediaFiles").build()
 

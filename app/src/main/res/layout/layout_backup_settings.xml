@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/photos_switcher_text"
+        android:checked="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/videos_switcher_text"
         app:layout_constraintEnd_toEndOf="parent"
+        android:checked="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/start_sync"
         app:layout_constraintTop_toBottomOf="@id/photo_switcher" />

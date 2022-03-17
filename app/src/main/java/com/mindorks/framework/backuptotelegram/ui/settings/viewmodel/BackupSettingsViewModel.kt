@@ -3,8 +3,7 @@ package com.mindorks.framework.backuptotelegram.ui.settings.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.mindorks.framework.backuptotelegram.data.network.telegram.services.DeleteService
 import com.mindorks.framework.backuptotelegram.data.network.telegram.services.PhotoService
 import com.mindorks.framework.backuptotelegram.data.network.telegram.services.VideoService
@@ -32,16 +31,16 @@ class BackupSettingsViewModel @Inject constructor(
     fun startBackup(photoSwitcherState: Boolean, videoSwitcherState: Boolean) {
         backupManager.run {
             if (photoSwitcherState) {
-                workManager.enqueue(OneTimeWorkRequestBuilder<ImageBackupWorker>().build())
+                createWorker(ImageBackupWorker::class.java)
             }
             if (videoSwitcherState) {
-                workManager.enqueue(OneTimeWorkRequestBuilder<VideoBackupWorker>().build())
+                createWorker(VideoBackupWorker::class.java)
             }
         }
     }
 
     fun deleteMessages() {
-        workManager.enqueue(OneTimeWorkRequestBuilder<DeleteBackupWorker>().build())
+        createWorker(DeleteBackupWorker::class.java)
     }
 
     fun saveSwitchersStates(videoSwitcherState: Boolean, photoSwitcherState: Boolean) {
@@ -52,5 +51,13 @@ class BackupSettingsViewModel @Inject constructor(
     fun getSwitcherStates() {
         photoSwitcherStateLiveData.postValue(preferences.getPhotoSwitcherState())
         videoSwitcherStateLiveData.postValue(preferences.getVideoSwitcherState())
+    }
+
+    private fun createWorker(workerClass: Class<out ListenableWorker>) {
+        workManager.beginUniqueWork(
+            workerClass.name,
+            ExistingWorkPolicy.APPEND_OR_REPLACE,
+            OneTimeWorkRequest.from(workerClass)
+        ).enqueue()
     }
 }

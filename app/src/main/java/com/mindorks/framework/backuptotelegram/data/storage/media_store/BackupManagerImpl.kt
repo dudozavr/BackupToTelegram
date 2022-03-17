@@ -239,12 +239,4 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
             null
         )
     }
-
-    private fun getSecretChatId(): String {
-        return "@kitty_channell"
-    }
-
-    private fun getSecretApiKey(): String {
-        return "5136388758:AAFwf4FSuU4hFhh1mXBAmPbeQyhZvgmYjMA"
-    }
 }

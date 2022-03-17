@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.mindorks.framework.backuptotelegram.R
 import com.mindorks.framework.backuptotelegram.data.network.telegram.services.DeleteService
 import com.mindorks.framework.backuptotelegram.data.storage.media_store.BackupManager
 import com.mindorks.framework.backuptotelegram.data.storage.preferences.AppPreferences
 import com.mindorks.framework.backuptotelegram.data.storage.room.MediaFileRepository
+import com.mindorks.framework.backuptotelegram.extentions.setForegroundWithForegroundInfo
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,12 @@ class DeleteBackupWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         withContext(Dispatchers.IO) {
+            setForegroundWithForegroundInfo(
+                applicationContext,
+                applicationContext.getString(R.string.delete_backup_notification_channel_name),
+                applicationContext.getString(R.string.delete_backup_notification_title),
+                applicationContext.getString(R.string.delete_backup_notification_body)
+            )
             backupManager.deleteMessages(preferences, deleteService, mediaFileRepository)
         }
         return Result.success()

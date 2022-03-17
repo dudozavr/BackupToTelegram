@@ -11,4 +11,12 @@
     <string name="delete_button_text">Completely clear the telegram channel</string>
     <string name="photos_switcher_text">Photos</string>
     <string name="videos_switcher_text">Videos</string>
+    <string name="image_backup_notification_channel_name">Image backup notification</string>
+    <string name="video_backup_notification_channel_name">Video backup notification</string>
+    <string name="delete_backup_notification_channel_name">Delete backup notification</string>
+    <string name="image_backup_notification_title">Image backup</string>
+    <string name="video_backup_notification_title">Video backup</string>
+    <string name="delete_backup_notification_title">Delete backup</string>
+    <string name="backup_notification_body">Performing a data backup</string>
+    <string name="delete_backup_notification_body">Performing a data cleaning</string>
 </resources>
