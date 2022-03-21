@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.mindorks.framework.backuptotelegram.ui.main_fragment.fragment.MainFragment"
+        android:label="main"
+        tools:layout="@layout/layout_main_fragment">
+        <action
+            android:id="@+id/action_main_fragment_to_auth_fragment"
+            app:destination="@+id/auth_fragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_main_fragment_to_backup_settings_fragment"
+            app:destination="@+id/backup_settings_fragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/auth_fragment"
+        android:name="com.mindorks.framework.backuptotelegram.ui.auth.fragment.AuthFragment"
+        android:label="auth"
+        tools:layout="@layout/layout_auth">
+        <action
+            android:id="@+id/action_auth_fragment_to_backup_settings_fragment"
+            app:destination="@+id/backup_settings_fragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/backup_settings_fragment"
+        android:name="com.mindorks.framework.backuptotelegram.ui.settings.fragment.BackupSettingsFragment"
+        android:label="backup"
+        tools:layout="@layout/layout_backup_settings" />
+</navigation>

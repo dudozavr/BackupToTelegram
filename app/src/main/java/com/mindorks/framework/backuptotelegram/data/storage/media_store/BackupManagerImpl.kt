@@ -121,6 +121,7 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
         mediaFileRepository: MediaFileRepository
     ) {
         val cursor = getImageCursor()
+        val totalCount = cursor?.count
         cursor?.let {
             it.use { cursor ->
 

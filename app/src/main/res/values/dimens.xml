@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="base_view_margin">16dp</dimen>
+    <dimen name="guideline_indent">16dp</dimen>
+    <dimen name="title_text_size">24sp</dimen>
+</resources>

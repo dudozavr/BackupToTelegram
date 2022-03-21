@@ -4,27 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/begin_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/guideline_indent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/guideline_indent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/auth_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="api_key_view, channel_id_view, sign_up" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/base_view_margin"
         android:text="@string/authorization_label_text"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="@dimen/title_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/api_key_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/begin_guideline" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/api_key_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:hint="@string/bot_api_key_hilt_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+        app:layout_constraintStart_toEndOf="@+id/begin_guideline"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -36,12 +55,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/channel_id_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="@dimen/base_view_margin"
         android:hint="@string/channel_id_hilt_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+        app:layout_constraintStart_toEndOf="@+id/begin_guideline"
         app:layout_constraintTop_toBottomOf="@+id/api_key_view">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -55,18 +74,22 @@
         android:id="@+id/sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="@dimen/base_view_margin"
         android:text="@string/sign_up_button_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/begin_guideline"
         app:layout_constraintTop_toBottomOf="@+id/channel_id_view" />
 
-<!--    <com.google.android.material.progressindicator.LinearProgressIndicator-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/auth_progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/begin_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

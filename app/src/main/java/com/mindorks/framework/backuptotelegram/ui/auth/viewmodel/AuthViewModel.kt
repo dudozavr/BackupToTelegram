@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
+import com.mindorks.framework.backuptotelegram.utils.prepareChatId
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -31,12 +32,13 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             if (authValidator.isCredentialsValid(APIKey, chatID)) {
                 try {
+                    val preparedChatId = prepareChatId(chatID)
                     telegramMessageService.sendTextMessage(
                         apiKey = APIKey,
-                        chat_id = chatID,
+                        chat_id = preparedChatId,
                         text = text
                     )
-                    preferences.saveCredentials(apiKey = APIKey, chatID = chatID)
+                    preferences.saveCredentials(apiKey = APIKey, chatID = preparedChatId)
                     isAuthSuccessLiveData.postValue(true)
                 } catch (e: Exception) {
                     Log.e(ERROR_TAG, e.message ?: "")

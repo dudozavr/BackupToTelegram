@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TelegramBackupper">
         <activity
-            android:name="com.mindorks.framework.backuptotelegram.MainActivity"
+            android:name="com.mindorks.framework.backuptotelegram.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

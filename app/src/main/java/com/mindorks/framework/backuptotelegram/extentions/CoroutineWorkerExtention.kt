@@ -12,28 +12,38 @@ import com.mindorks.framework.backuptotelegram.R
 
 suspend fun CoroutineWorker.setForegroundWithForegroundInfo(
     context: Context,
+    notificationId: Int,
+    notificationIdString: String,
     channelName: String,
     title: String,
     body: String
 ) {
-    setForeground(createForegroundInfo(context, channelName, title, body))
+    setForeground(
+        createForegroundInfo(
+            context,
+            notificationId,
+            notificationIdString,
+            channelName,
+            title,
+            body
+        )
+    )
 }
-
-private const val NOTIFICATION_ID = 0
-private const val NOTIFICATION_ID_STRING = "0"
 
 private fun createForegroundInfo(
     context: Context,
+    notificationId: Int,
+    notificationIdString: String,
     channelName: String,
     title: String,
     body: String
 ): ForegroundInfo {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        createChannel(context, channelName)
+        createChannel(context, notificationIdString, channelName)
     }
 
-    val notification = NotificationCompat.Builder(context, NOTIFICATION_ID_STRING)
+    val notification = NotificationCompat.Builder(context, notificationIdString)
         .setContentTitle(title)
         .setTicker(title)
         .setContentText(body)
@@ -41,15 +51,15 @@ private fun createForegroundInfo(
         .setOngoing(true)
         .build()
 
-    return ForegroundInfo(NOTIFICATION_ID, notification)
+    return ForegroundInfo(notificationId, notification)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-private fun createChannel(context: Context, channelName: String) {
+private fun createChannel(context: Context, notificationIdString: String, channelName: String) {
     (context.getSystemService(Context.NOTIFICATION_SERVICE) as
             NotificationManager).createNotificationChannel(
         NotificationChannel(
-            NOTIFICATION_ID_STRING,
+            notificationIdString,
             channelName,
             NotificationManager.IMPORTANCE_DEFAULT
         )

@@ -1,4 +1,4 @@
-package com.mindorks.framework.backuptotelegram
+package com.mindorks.framework.backuptotelegram.ui
 
 import android.Manifest
 import android.content.Intent
@@ -14,17 +14,16 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.navigation.findNavController
+import com.mindorks.framework.backuptotelegram.BuildConfig
+import com.mindorks.framework.backuptotelegram.R
 import com.mindorks.framework.backuptotelegram.data.storage.preferences.AppPreferences
-import com.mindorks.framework.backuptotelegram.ui.auth.fragment.AuthFragment
-import com.mindorks.framework.backuptotelegram.ui.settings.fragment.BackupSettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var preferences: AppPreferences
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -36,34 +35,15 @@ class MainActivity : AppCompatActivity() {
         if (!checkPermissions()) {
             requestPermissions()
         }
-        if (preferences.isCredentialsExist()) {
-            openFragment(BackupSettingsFragment(), BackupSettingsFragment.TAG)
-        } else {
-            openFragment(AuthFragment(), AuthFragment.TAG)
-        }
     }
 
-    fun openFragment(fragment: Fragment, tag: String, doClearBackStack: Boolean = false) {
-        if (doClearBackStack) {
-            clearBackStack()
-        }
-        supportFragmentManager.commit {
-            replace(R.id.main_fragment_manager, fragment, tag)
-                .addToBackStack(tag)
-        }
-    }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1) {
-            super.onBackPressed()
-        } else {
-            finish()
-        }
-    }
-
-    private fun clearBackStack() {
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    }
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.backStackEntryCount > 1) {
+//            super.onBackPressed()
+//        } else {
+//            finish()
+//        }
+//    }
 
     private fun checkPermissions(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

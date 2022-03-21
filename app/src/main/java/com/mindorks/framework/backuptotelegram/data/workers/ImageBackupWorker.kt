@@ -19,6 +19,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 
 @HiltWorker
 class ImageBackupWorker @AssistedInject constructor(
@@ -30,10 +31,17 @@ class ImageBackupWorker @AssistedInject constructor(
     private val mediaFileRepository: MediaFileRepository
 ) : CoroutineWorker(context, workerParameters) {
 
+    companion object {
+        const val NOTIFICATION_ID = 1
+        const val NOTIFICATION_ID_STRING = "ImageBackup"
+    }
+
     override suspend fun doWork(): Result {
         withContext(Dispatchers.IO) {
             setForegroundWithForegroundInfo(
                 applicationContext,
+                NOTIFICATION_ID,
+                NOTIFICATION_ID_STRING,
                 applicationContext.getString(R.string.image_backup_notification_channel_name),
                 applicationContext.getString(R.string.image_backup_notification_title),
                 applicationContext.getString(R.string.backup_notification_body)

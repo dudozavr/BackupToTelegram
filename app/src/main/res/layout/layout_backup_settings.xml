@@ -8,23 +8,23 @@
         android:id="@+id/photo_switcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/photos_switcher_text"
         android:checked="true"
+        android:text="@string/photos_switcher_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/video_switcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/videos_switcher_text"
-        app:layout_constraintEnd_toEndOf="parent"
         android:checked="true"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/videos_switcher_text"
         app:layout_constraintBottom_toTopOf="@+id/start_sync"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photo_switcher" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -50,5 +50,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/backup_progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/settings_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="photo_switcher,
+        video_switcher, start_sync, delete_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

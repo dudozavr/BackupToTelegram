@@ -25,10 +25,17 @@ class DeleteBackupWorker @AssistedInject constructor(
     private val mediaFileRepository: MediaFileRepository
 ) : CoroutineWorker(context, workerParameters) {
 
+    companion object {
+        private const val NOTIFICATION_ID = 3
+        private const val NOTIFICATION_ID_STRING = "DeleteBackup"
+    }
+
     override suspend fun doWork(): Result {
         withContext(Dispatchers.IO) {
             setForegroundWithForegroundInfo(
                 applicationContext,
+                NOTIFICATION_ID,
+                NOTIFICATION_ID_STRING,
                 applicationContext.getString(R.string.delete_backup_notification_channel_name),
                 applicationContext.getString(R.string.delete_backup_notification_title),
                 applicationContext.getString(R.string.delete_backup_notification_body)
