@@ -22,10 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
 
-    companion object {
-        const val TAG = "AuthFragment"
-    }
-
     private val authViewModel by viewModels<AuthViewModel>()
     private lateinit var apiKey: TextInputEditText
     private lateinit var chatID: TextInputEditText

@@ -73,13 +73,11 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
                 val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
                 val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
                 val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
-                val dateColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_TAKEN)
 
                 while (cursor.moveToNext()) {
                     val id = cursor.getLong(idColumn)
                     val name = cursor.getString(nameColumn)
                     val size = cursor.getString(sizeColumn)
-                    val date = cursor.getString(dateColumn)
 
                     if (!mediaFileRepository.isMediaFileAlreadyReserved(id)) {
                         val contentUri =
@@ -121,20 +119,16 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
         mediaFileRepository: MediaFileRepository
     ) {
         val cursor = getImageCursor()
-        val totalCount = cursor?.count
         cursor?.let {
             it.use { cursor ->
-
                 val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
                 val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
                 val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
-                val dateColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN)
 
                 while (cursor.moveToNext()) {
                     val id = cursor.getLong(idColumn)
                     val name = cursor.getString(nameColumn)
                     val size = cursor.getString(sizeColumn)
-                    val date = cursor.getString(dateColumn)
 
                     if (!mediaFileRepository.isMediaFileAlreadyReserved(id)) {
                         val contentUri =
@@ -166,7 +160,6 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
                     }
                 }
             }
-            it.close()
         }
     }
 
@@ -176,7 +169,7 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
         fileName: String,
         key: String
     ): MultipartBody.Part {
-        val file = createTemporaryFileForBackup(uri, size, fileName, key)
+        val file = createTemporaryFileForBackup(uri, size, fileName)
         return getMultipartRequestBody(file, fileName, key)
     }
 
@@ -194,15 +187,12 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
     private fun createTemporaryFileForBackup(
         uri: Uri,
         size: Int,
-        fileName: String,
-        key: String
+        fileName: String
     ): File {
         val file = File(context.cacheDir, fileName).apply {
             createNewFile()
         }
-        //val pathCompressedFile = compressFile(uri, key)
         val buffInput = BufferedInputStream(context.contentResolver.openInputStream(uri))
-        //val buffInput = BufferedInputStream(context.contentResolver.openInputStream(Uri.parse(pathCompressedFile)))
         val bos = BufferedOutputStream(FileOutputStream(file))
         val buf = ByteArray(size)
         buffInput.read(buf)
@@ -211,14 +201,6 @@ class BackupManagerImpl @Inject constructor(@ApplicationContext private val cont
         } while (buffInput.read(buf) != -1)
 
         return file
-    }
-
-    private fun compressFile(uri: Uri, key: String): String {
-        return if (key == IMAGE_KEY) {
-            SiliCompressor.with(context).compress(uri.toString(), context.cacheDir)
-        } else {
-            SiliCompressor.with(context).compressVideo(uri.path, context.cacheDir.absolutePath)
-        }
     }
 
     private fun getImageCursor(): Cursor? {

@@ -20,8 +20,6 @@ class BackupSettingsViewModel @Inject constructor(
 
     val photoSwitcherStateLiveData = MutableLiveData<Boolean>()
     val videoSwitcherStateLiveData = MutableLiveData<Boolean>()
-    val imageBackupComplete = MutableLiveData<Unit>()
-    val videoBackupComplete = MutableLiveData<Unit>()
 
     fun startBackup(photoSwitcherState: Boolean, videoSwitcherState: Boolean) {
         backupManager.run {

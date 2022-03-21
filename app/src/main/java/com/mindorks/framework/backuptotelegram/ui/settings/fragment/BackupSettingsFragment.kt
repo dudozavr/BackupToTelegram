@@ -23,10 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BackupSettingsFragment : Fragment() {
 
-    companion object {
-        const val TAG = "BackupSettingsFragment"
-    }
-
     private val backupSettingsViewModel by viewModels<BackupSettingsViewModel>()
     private lateinit var startSyncButton: AppCompatButton
     private lateinit var deleteText: AppCompatTextView
@@ -52,11 +48,11 @@ class BackupSettingsFragment : Fragment() {
         checkToExistWorkers()
     }
 
-    override fun onDestroy() {
-        backupSettingsViewModel.saveSwitchersStates(photoSwither.isChecked, videoSwither.isChecked)
-        super.onDestroy()
+    override fun onStop() {
+        backupSettingsViewModel.saveSwitchersStates(videoSwither.isChecked, photoSwither.isChecked)
+        super.onStop()
     }
-
+    
     private fun initFields() {
         view?.let {
             startSyncButton = it.findViewById(R.id.start_sync)

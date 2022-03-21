@@ -37,14 +37,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onBackPressed() {
-//        if (supportFragmentManager.backStackEntryCount > 1) {
-//            super.onBackPressed()
-//        } else {
-//            finish()
-//        }
-//    }
-
     private fun checkPermissions(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Environment.isExternalStorageManager()
